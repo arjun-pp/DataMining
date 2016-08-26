@@ -4,17 +4,20 @@ class GoogleAddress
 		@geocoder_api_url = "https://maps.googleapis.com/maps/api/geocode/json?address=%s"
 	end
 
+  # Rough address.
 	def get_clean_address address
 		uri = URI(@geocoder_api_url % [address])
 		response = JSON.parse(Net::HTTP.get(uri))
 		process_address response["results"][0]
 	end
 
+  # Clean address.
 	def handle_insertion address, address_location_type = ""
 		clean_address = get_clean_address address
 		insert_address clean_address, address_location_type
 	end
 
+	# @param [Hash]
 	def process_address api_data
 		address = {}
 		for component in api_data["address_components"].reverse do
@@ -46,6 +49,8 @@ class GoogleAddress
 		address
 	end
 
+  # @param address_location_type [String]
+  # @param address [String]
 	def insert_address address, address_location_type
 		if not Place::City.new(address["city"]).exists?
 			insert_city address
@@ -112,10 +117,11 @@ class GoogleAddress
 			.neghbourhood(:name => address["neghbourhood"], :lat => coordinates["lat"], :lng => coordinates["lng"])
 			.save!
 	end	
+	# @param address [String],
 
-	def insert_location address, address_location_type
+	def insert_location address, address_location_type = nil
 		coordinates = adress["coordinates"]
-		if address_location_type
+		if address_location_type.exists?
 			Place::City.new(:name => address["city"])
 				.location(:name => address["neghbourhood"], :lat => coordinates["lat"], :lng => coordinates["lng"])
 				.address_location_type(:name => address_location_type)

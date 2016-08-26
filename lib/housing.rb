@@ -20,7 +20,7 @@ class Housing
 				print "Processing %s" % [poylgon_id]
 				if not (db.keys.include? poylgon_id and db[poylgon_id] == "done")
 						housing_address = get_address poylgon_id
-						GoogleAddress.new().handle_insertion housing_address
+						GoogleAddress.new.handle_insertion housing_address
 				    db.set! poylgon_id, "done"
 				end
 			end

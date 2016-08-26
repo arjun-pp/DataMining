@@ -27,6 +27,8 @@ gem 'pg'
 gem 'daybreak'
 gem 'selenium'
 gem 'selenium-webdriver'
+gem 'resque'
+gem 'daybreak'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

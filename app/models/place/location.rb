@@ -1,4 +1,6 @@
-class Location  < Place
-	belongs_to :neighbourhood
-	has_one :type	
+module Place
+  class Location
+    belongs_to :city
+    has_one :location_type
+  end
 end

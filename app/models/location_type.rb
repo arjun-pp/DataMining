@@ -1,3 +1,3 @@
-class LocationType < ApplicationRecord
-	has_many :locations	
+class LocationType
+  belongs_to :location
 end
